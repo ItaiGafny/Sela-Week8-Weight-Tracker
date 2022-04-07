@@ -27,7 +27,7 @@ steps:
   inputs:
     sourceFolder: $(Build.SourcesDirectory)
     contents: '*.zip' 
-    targetFolder: $(Build.ArtifactStagingDirectory)
+    targetFolder: $(Build.StagingDirectory)
 - task: printAllVariables@1
   displayName: 'Print all variables'
   

@@ -7,7 +7,9 @@ trigger:
 - master
 
 pool:
-  vmImage: ubuntu-latest
+  #removed, paralelism needed
+  #vmImage: ubuntu-latest
+  name: 'my-pool'
 
 steps:
 - task: NodeTool@0
@@ -19,3 +21,19 @@ steps:
     npm install @hapi/hapi@19 @hapi/bell@12 @hapi/boom@9 @hapi/cookie@11 @hapi/inert@6 @hapi/joi@17 @hapi/vision@6 dotenv@8 ejs@3 postgres@1
     npm --save-dev nodemon@2
   displayName: 'npm install and build'
+
+# Copy Files
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: $(Build.SourcesDirectory)
+    contents: '*.zip' 
+    targetFolder: $(Build.ArtifactStagingDirectory)
+
+- task: UniversalPackages@0
+  displayName: Universal Publish
+  inputs:
+    command: publish
+    publishDirectory: '$(Build.ArtifactStagingDirectory)'
+    vstsFeedPublish: 'my-feed'
+    vstsFeedPackagePublish: 'my-artifact-yaml'
+    packagePublishDescription: 'my-artifact description'

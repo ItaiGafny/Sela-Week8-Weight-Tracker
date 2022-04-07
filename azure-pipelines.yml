@@ -17,16 +17,16 @@ steps:
     versionSpec: '14.x'
   displayName: 'Install Node.js'
 
-#- script: |
-#    npm install @hapi/hapi@19 @hapi/bell@12 @hapi/boom@9 @hapi/cookie@11 @hapi/inert@6 @hapi/joi@17 @hapi/vision@6 dotenv@8 ejs@3 postgres@1
-#    npm --save-dev nodemon@2
-#  displayName: 'npm install and build'
+- script: |
+    npm install @hapi/hapi@19 @hapi/bell@12 @hapi/boom@9 @hapi/cookie@11 @hapi/inert@6 @hapi/joi@17 @hapi/vision@6 dotenv@8 ejs@3 postgres@1
+    npm --save-dev nodemon@2
+  displayName: 'npm install and build'
 
 # Copy Files
 - task: CopyFiles@2
   inputs:
     sourceFolder: $(Build.SourcesDirectory)
-    contents: '*.*' 
+    contents: '**' 
     targetFolder: $(Build.artifactstagingdirectory)
 - task: printAllVariables@1
   displayName: 'Print all variables'

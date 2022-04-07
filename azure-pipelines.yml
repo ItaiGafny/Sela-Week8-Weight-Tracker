@@ -23,11 +23,21 @@ steps:
   displayName: 'npm install and build'
 
 # Copy Files
-- task: CopyFiles@2
+#- task: CopyFiles@2
+#  inputs:
+#    sourceFolder: $(Build.SourcesDirectory)
+#    contents: '**' 
+#    targetFolder: $(Build.artifactstagingdirectory)
+
+- task: ArchiveFiles@2
+  displayName: 'zip files to artifacts'
   inputs:
-    sourceFolder: $(Build.SourcesDirectory)
-    contents: '**' 
-    targetFolder: $(Build.artifactstagingdirectory)
+    rootFolderOrFile: '$(Build.SourcesDirectory)'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+
 - task: printAllVariables@1
   displayName: 'Print all variables'
   

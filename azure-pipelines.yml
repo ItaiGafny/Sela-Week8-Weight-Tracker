@@ -26,8 +26,8 @@ steps:
 - task: CopyFiles@2
   inputs:
     sourceFolder: $(Build.SourcesDirectory)
-    contents: '*.zip' 
-    targetFolder: $(Build.StagingDirectory)
+    contents: '*.*' 
+    targetFolder: $(Build.artifactstagingdirectory)
 - task: printAllVariables@1
   displayName: 'Print all variables'
   
@@ -35,7 +35,7 @@ steps:
   displayName: Universal Publish
   inputs:
     command: publish
-    publishDirectory: '$(Build.StagingDirectory)'
+    publishDirectory: '$(Build.artifactstagingdirectory)'
     vstsFeedPublish: 'WeightTracker/my-feed2'
     vstsFeedPackagePublish: 'my-artifact-yaml'
     packagePublishDescription: 'my-artifact description'

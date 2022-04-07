@@ -35,7 +35,7 @@ steps:
   displayName: Universal Publish
   inputs:
     command: publish
-    publishDirectory: '$(Build.ArtifactStagingDirectory)'
+    publishDirectory: '$(Build.StagingDirectory)'
     vstsFeedPublish: 'WeightTracker/my-feed2'
     vstsFeedPackagePublish: 'my-artifact-yaml'
     packagePublishDescription: 'my-artifact description'

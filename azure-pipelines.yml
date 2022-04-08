@@ -49,3 +49,4 @@ steps:
     vstsFeedPublish: 'WeightTracker/my-feed2'
     vstsFeedPackagePublish: 'my-artifact-yaml'
     packagePublishDescription: 'my-artifact description'
+    artifactName: 'app'

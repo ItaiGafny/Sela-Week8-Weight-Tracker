@@ -8,8 +8,8 @@ trigger:
 
 pool:
   #removed, paralelism needed
-  #vmImage: ubuntu-latest
-  name: 'my-pool'
+  vmImage: ubuntu-latest
+  #name: 'my-pool'
 
 steps:
 - task: NodeTool@0
@@ -23,30 +23,26 @@ steps:
   displayName: 'npm install and build'
 
 # Copy Files
-#- task: CopyFiles@2
-#  inputs:
-#    sourceFolder: $(Build.SourcesDirectory)
-#    contents: '**' 
-#    targetFolder: $(Build.artifactstagingdirectory)
-
-- task: ArchiveFiles@2
-  displayName: 'zip files to artifacts'
+- task: CopyFiles@2
   inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+    sourceFolder: $(Build.SourcesDirectory)
+    contents: '**' 
+    targetFolder: $(Build.artifactstagingdirectory)
+
+#- task: ArchiveFiles@2
+#  displayName: 'zip files to artifacts'
+#  inputs:
+#    rootFolderOrFile: '$(Build.SourcesDirectory)'
+#    includeRootFolder: true
+#    archiveType: 'zip'
+#    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+#    replaceExistingArchive: true
 
 - task: printAllVariables@1
   displayName: 'Print all variables'
   
-- task: UniversalPackages@0
-  displayName: Universal Publish
+- task: PublishPipelineArtifact@1
   inputs:
-    command: publish
-    publishDirectory: '$(Build.artifactstagingdirectory)'
-    vstsFeedPublish: 'WeightTracker/my-feed2'
-    vstsFeedPackagePublish: 'my-artifact-yaml'
-    packagePublishDescription: 'my-artifact description'
-    artifactName: 'app'
+    targetPath: '$(Pipeline.Workspace)'
+    artifact: 'app'
+    publishLocation: 'pipeline'

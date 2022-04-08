@@ -7,9 +7,9 @@ trigger:
 - master
 
 pool:
-  #removed, paralelism needed
-  vmImage: ubuntu-latest
-  #name: 'my-pool'
+  #removed, cannot run the packages needed: npm WARN deprecated @hapi/teamwork@4.0.0: This version has been deprecated and is no longer supported or maintained
+  #vmImage: ubuntu-latest
+  name: 'my-pool'
 
 steps:
 - task: NodeTool@0

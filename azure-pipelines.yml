@@ -79,8 +79,10 @@ stages:
               displayName: Download ansible files
             - script: cp -R $(System.DefaultWorkingDirectory) ~/$(app_default_directory)/$(ansible_directory)
               displayName: Copy ansible files
+            - script: echo [webservers] >> inventory
             - ${{ each value in parameters.hosts }}:
-              - script: echo ${{ value }}
+              - script: echo ${{ value }} >> inventory
+                displayName: Create hosts file 
             #- task: printAllVariables@1
 
 

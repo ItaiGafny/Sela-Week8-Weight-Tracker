@@ -47,12 +47,4 @@ steps:
     artifact: 'app'
     publishLocation: 'pipeline'
 
-# CD - Deployment to Staging
-jobs:  
-- deployment: VMDeploy
-  displayName: web
-  environment:
-    name:  Staging
-    resourceType: VirtualMachine
-    tags: staging
-  strategy:
+

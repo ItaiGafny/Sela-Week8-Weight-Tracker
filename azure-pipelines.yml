@@ -42,7 +42,6 @@ stages:
    jobs:
     - job: Deploy
       displayName: Deploy
-
     - deployment: VMDeploy
       displayName: web
       environment:

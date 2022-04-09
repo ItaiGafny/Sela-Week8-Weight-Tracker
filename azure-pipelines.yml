@@ -73,6 +73,8 @@ stages:
 #            - script: echo my first deploymentunzip path/to/file -d path/to/folde
             - script: rm -rf ~/$(app_default_directory)
               displayName: Remove app
+            - script: mkdir ~/$(app_default_directory)/$(ansible_directory)/files/app
+              displayName: Make dire app to ansible files directory
             - script: unzip $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)/$(ansible_directory)/files/app
               displayName: Unzip app to ansible files directory
             - checkout: AnsibleRepo
@@ -85,16 +87,14 @@ stages:
             - ${{ each value in parameters.hosts }}:
               - script: echo ${{ value }} >> inventory
                 displayName: Create hosts file 
-            #- task: printAllVariables@1
-
+              # - script: echo ${{ value }} >> inventory
+              #   displayName: Create .env file based on params 
 
 # - task: Ansible@0
 #   inputs:
 #     ansibleInterface: 'agentMachine'
-#     playbookPathOnAgentMachine: '/ansi'
-#     inventoriesAgentMachine: 'file'
-#     inventoryFileOnAgentMachine: '/ansi'
+#     playbookPathOnAgentMachine: 'ansible/install_site.yml'
+#     inventoriesAgentMachine: 'noInventory'
 #     args: '--ask-become-pass'
 
-# create the hosts file from variables
 # Run the Ansible playbook

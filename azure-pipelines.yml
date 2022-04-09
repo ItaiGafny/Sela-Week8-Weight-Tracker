@@ -3,6 +3,13 @@ variables:
   value: sela_week7 
 - name: ansible_directory
   value: ansible 
+parameters:
+- name: hosts
+  type: object
+  default:
+  - 10.0.0.4
+  - 10.0.0.5
+  - 10.0.0.7
 
 resources:
   repositories:
@@ -69,9 +76,14 @@ stages:
             - script: unzip $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)
               displayName: Unzip app
             - checkout: AnsibleRepo
-              displayName: Copy ansible files
+              displayName: Download ansible files
             - script: cp -R $(System.DefaultWorkingDirectory) ~/$(app_default_directory)/$(ansible_directory)
+              displayName: Copy ansible files
+              - ${{ each value in parameters.hosts }}:
+            - script: echo ${{ value }}
             #- task: printAllVariables@1
+
+
 # - task: Ansible@0
 #   inputs:
 #     ansibleInterface: 'agentMachine'
@@ -79,6 +91,6 @@ stages:
 #     inventoriesAgentMachine: 'file'
 #     inventoryFileOnAgentMachine: '/ansi'
 #     args: '--ask-become-pass'
-# Download the ansible from repo
+
 # create the hosts file from variables
 # Run the Ansible playbook

@@ -57,7 +57,7 @@ stages:
           deploy:
             steps:
 #            - script: echo my first deploymentunzip path/to/file -d path/to/folde
-            - script: unzip $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d $(app_default_directory)
+            - script: unzip $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)
             - task: printAllVariables@1
 
 # Download the ansible from repo

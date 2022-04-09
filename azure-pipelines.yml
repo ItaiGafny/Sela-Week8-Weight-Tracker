@@ -1,6 +1,8 @@
 variables:
 - name: app_default_directory
   value: sella_week7 
+- name: app_default_directory
+  value: sella_week7 
 
 trigger:
 - master
@@ -37,6 +39,8 @@ stages:
       - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
         artifact: drop
 
+      - task: printAllVariables@1
+      
  - stage: Deploy_to_Staging
    jobs:
     - job: Deploy

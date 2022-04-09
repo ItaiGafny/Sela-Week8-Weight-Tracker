@@ -38,7 +38,7 @@ stages:
       - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
         artifact: drop
 
- - stage: Deploy
+ - stage: Deploy_to_Staging
    jobs:
     - job: Deploy
       displayName: Deploy

@@ -42,10 +42,6 @@ stages:
    jobs:
     - job: Deploy
       displayName: Deploy
-      cancelTimeoutInMinutes: 
-      condition: 
-      container:
-      continueOnError: 
 
     - deployment: VMDeploy
       displayName: web

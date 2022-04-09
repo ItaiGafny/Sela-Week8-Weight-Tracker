@@ -76,7 +76,7 @@ stages:
             #- script: mkdir ~/$(app_default_directory)/$(ansible_directory)/files/app
               #displayName: Make directory app to ansible files directory
             #- script: unzip $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)/$(ansible_directory)/files/app
-            - script: unzip $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)/$(ansible_directory)
+            - script: unzip $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)
               displayName: Unzip app to ansible files directory
             - checkout: AnsibleRepo
               displayName: Download ansible files

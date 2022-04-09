@@ -70,7 +70,7 @@ stages:
               displayName: Unzip app
             - checkout: AnsibleRepo
               displayName: Copy ansible files
-            - script: echo $(System.DefaultWorkingDirectory)
+            - script: cp $(System.DefaultWorkingDirectory) ~/$(app_default_directory)/$(ansible_directory)
             #- task: printAllVariables@1
 # - task: Ansible@0
 #   inputs:

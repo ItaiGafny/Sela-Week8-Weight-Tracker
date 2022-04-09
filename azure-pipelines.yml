@@ -57,7 +57,7 @@ stages:
 # unzip the files
               - task: ExtractFiles@1
                 inputs:
-                  archiveFilePatterns: '**/*.zip'
+                  archiveFilePatterns: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
                   destinationFolder: '$(app_default_directory)'
                   cleanDestinationFolder: true
                   overwriteExistingFiles: false

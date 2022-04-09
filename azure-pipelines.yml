@@ -52,15 +52,9 @@ stages:
         runOnce:
           deploy:
             steps:
-#            - script: echo my first deployment
+#            - script: echo my first deploymentunzip path/to/file -d path/to/folde
+            - script: unzip $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip -d $(app_default_directory)
 
-# unzip the files
-              - task: ExtractFiles@1
-                inputs:
-                  archiveFilePatterns: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-                  destinationFolder: '$(app_default_directory)'
-                  cleanDestinationFolder: true
-                  overwriteExistingFiles: false
 # Download the ansible from repo
 # create the hosts file from variables
 # Run the Ansible playbook

@@ -1,35 +1,39 @@
-  jobs:  
-  - job: Build
-    displayName: Build
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
-    pool:
+trigger:
+- master
+
+stages:
+ - stage: Build
+   jobs:
+    - job: Build
+      displayName: Build
+      pool:
       #removed, cannot run the packages needed: npm WARN deprecated @hapi/teamwork@4.0.0: This version has been deprecated and is no longer supported or maintained
       #vmImage: ubuntu-latest
-      name: 'my-pool'
+        name: 'my-pool'
 
-    steps:
-    - task: NodeTool@0
-      inputs:
-        versionSpec: '14.x'
-      displayName: 'Install Node.js'
+      steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '14.x'
+        displayName: 'Install Node.js'
 
-    - script: |
-        npm install @hapi/hapi@19 @hapi/bell@12 @hapi/boom@9 @hapi/cookie@11 @hapi/inert@6 @hapi/joi@17 @hapi/vision@6 dotenv@8 ejs@3 postgres@1
-        npm --save-dev nodemon@2
-      displayName: 'npm install and build'
-# - task: PublishPipelineArtifact@1
-#   inputs:
-#     targetPath: '$(Build.artifactstagingdirectory)'
-#     artifact: 'app'
-#     publishLocation: 'pipeline'
+      - script: |
+          npm install @hapi/hapi@19 @hapi/bell@12 @hapi/boom@9 @hapi/cookie@11 @hapi/inert@6 @hapi/joi@17 @hapi/vision@6 dotenv@8 ejs@3 postgres@1
+          npm --save-dev nodemon@2
+        displayName: 'npm install and build'
 
-    - task: ArchiveFiles@2
-      displayName: 'Archive files'
-      inputs:
-        rootFolderOrFile: '$(Build.SourcesDirectory)'
-        includeRootFolder: false
-        archiveType: zip
-        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-        replaceExistingArchive: true
-    - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-      artifact: drop
+      - task: ArchiveFiles@2
+        displayName: 'Archive files'
+        inputs:
+          rootFolderOrFile: '$(Build.SourcesDirectory)'
+          includeRootFolder: false
+          archiveType: zip
+          archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+          replaceExistingArchive: true
+      - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        artifact: drop

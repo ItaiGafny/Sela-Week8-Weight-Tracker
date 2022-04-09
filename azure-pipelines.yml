@@ -69,9 +69,16 @@ stages:
             - script: unzip $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)
               displayName: Unzip app
             - checkout: AnsibleRepo
-            - script: echo $(Pipeline.WorkingDirectory)
+              displayName: Copy ansible files
+            - script: echo $(System.DefaultWorkingDirectory)
             #- task: printAllVariables@1
-
+# - task: Ansible@0
+#   inputs:
+#     ansibleInterface: 'agentMachine'
+#     playbookPathOnAgentMachine: '/ansi'
+#     inventoriesAgentMachine: 'file'
+#     inventoryFileOnAgentMachine: '/ansi'
+#     args: '--ask-become-pass'
 # Download the ansible from repo
 # create the hosts file from variables
 # Run the Ansible playbook

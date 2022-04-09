@@ -1,8 +1,15 @@
 variables:
 - name: app_default_directory
   value: sella_week7 
-- name: app_default_directory
-  value: sella_week7 
+- name: ansible_directory
+  value: ansible 
+
+resources:
+  repositories:
+  - repository: Ansible # The name used to reference this repository in the checkout step
+    type: github
+    endpoint: ItaiGafny
+    name: ItaiGafny/Sela-Week7-Ansible
 
 trigger:
 - master
@@ -58,6 +65,7 @@ stages:
             steps:
 #            - script: echo my first deploymentunzip path/to/file -d path/to/folde
             - script: unzip $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)
+            - checkout: Ansible
             #- task: printAllVariables@1
 
 # Download the ansible from repo

@@ -37,3 +37,25 @@ stages:
           replaceExistingArchive: true
       - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
         artifact: drop
+
+ - stage: Deploy
+   jobs:
+    - job: Deploy
+      displayName: Deploy
+      cancelTimeoutInMinutes: 
+      condition: 
+      container:
+      continueOnError: 
+
+    - deployment: VMDeploy
+      displayName: web
+      environment:
+        name:  'Staging'
+        resourceType: VirtualMachine
+        tags: 'staging'
+      strategy:
+      # default deployment strategy, more coming...
+        runOnce:
+          deploy:
+            steps:
+            - script: echo my first deployment

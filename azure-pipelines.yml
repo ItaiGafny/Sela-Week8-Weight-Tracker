@@ -3,19 +3,35 @@
   jobs:  
   - job: Build
     displayName: Build
+
+    trigger:
+    - master
+
+    pool:
+      #removed, cannot run the packages needed: npm WARN deprecated @hapi/teamwork@4.0.0: This version has been deprecated and is no longer supported or maintained
+      #vmImage: ubuntu-latest
+      name: 'my-pool'
+
+    steps:
     - task: NodeTool@0
       inputs:
-        versionSpec: '10.x'
+        versionSpec: '14.x'
       displayName: 'Install Node.js'
+
     - script: |
-        npm install
-        npm run build --if-present
-        npm run test --if-present
-      displayName: 'npm install, build and test'
+        npm install @hapi/hapi@19 @hapi/bell@12 @hapi/boom@9 @hapi/cookie@11 @hapi/inert@6 @hapi/joi@17 @hapi/vision@6 dotenv@8 ejs@3 postgres@1
+        npm --save-dev nodemon@2
+      displayName: 'npm install and build'
+# - task: PublishPipelineArtifact@1
+#   inputs:
+#     targetPath: '$(Build.artifactstagingdirectory)'
+#     artifact: 'app'
+#     publishLocation: 'pipeline'
+
     - task: ArchiveFiles@2
       displayName: 'Archive files'
       inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+        rootFolderOrFile: '$(Build.SourcesDirectory)'
         includeRootFolder: false
         archiveType: zip
         archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip

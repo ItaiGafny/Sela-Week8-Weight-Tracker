@@ -66,8 +66,9 @@ stages:
 #            - script: echo my first deploymentunzip path/to/file -d path/to/folde
             - script: rm -rf ~/$(app_default_directory)
             - script: unzip $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)
+              displayName: After unzip
             - checkout: AnsibleRepo
-            - script: echo $(Pipeline.SourcesDirectory)
+            - script: echo $(Agent.ReleaseDirectory)
             #- task: printAllVariables@1
 
 # Download the ansible from repo

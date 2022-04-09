@@ -22,36 +22,36 @@ trigger:
 - master
 
 stages:
-#  - stage: Build
-#    jobs:
-#     - job: Build
-#       displayName: Build
-#       pool:
-#       #removed, cannot run the packages needed: npm WARN deprecated @hapi/teamwork@4.0.0: This version has been deprecated and is no longer supported or maintained
-#       #vmImage: ubuntu-latest
-#         name: 'my-pool'
+ - stage: Build
+   jobs:
+    - job: Build
+      displayName: Build
+      pool:
+      #removed, cannot run the packages needed: npm WARN deprecated @hapi/teamwork@4.0.0: This version has been deprecated and is no longer supported or maintained
+      #vmImage: ubuntu-latest
+        name: 'my-pool'
 
-#       steps:
-#       - task: NodeTool@0
-#         inputs:
-#           versionSpec: '14.x'
-#         displayName: 'Install Node.js'
+      steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '14.x'
+        displayName: 'Install Node.js'
 
-#       - script: |
-#           npm install @hapi/hapi@19 @hapi/bell@12 @hapi/boom@9 @hapi/cookie@11 @hapi/inert@6 @hapi/joi@17 @hapi/vision@6 dotenv@8 ejs@3 postgres@1
-#           npm --save-dev nodemon@2
-#         displayName: 'npm install and build'
+      - script: |
+          npm install @hapi/hapi@19 @hapi/bell@12 @hapi/boom@9 @hapi/cookie@11 @hapi/inert@6 @hapi/joi@17 @hapi/vision@6 dotenv@8 ejs@3 postgres@1
+          npm --save-dev nodemon@2
+        displayName: 'npm install and build'
 
-#       - task: ArchiveFiles@2
-#         displayName: 'Archive files'
-#         inputs:
-#           rootFolderOrFile: '$(Build.SourcesDirectory)'
-#           includeRootFolder: false
-#           archiveType: zip
-#           archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-#           replaceExistingArchive: true
-#       - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-#         artifact: drop
+      - task: ArchiveFiles@2
+        displayName: 'Archive files'
+        inputs:
+          rootFolderOrFile: '$(Build.SourcesDirectory)'
+          includeRootFolder: false
+          archiveType: zip
+          archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+          replaceExistingArchive: true
+      - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        artifact: drop
 
       
       
@@ -70,13 +70,11 @@ stages:
         runOnce:
           deploy:
             steps:
-#            - script: echo my first deploymentunzip path/to/file -d path/to/folde
             - script: rm -rf ~/$(app_default_directory)
               displayName: Remove app
             - script: mkdir -p ~/$(app_default_directory)/$(ansible_directory)/files/app
               displayName: Make directory app to ansible files directory
-            - script: unzip $(System.ArtifactsDirectory)/../drop/78.zip -d ~/$(app_default_directory)/$(ansible_directory)/files/app
-            #- script: unzip $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)
+            - script: unzip $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)/$(ansible_directory)/files/app
               displayName: Unzip app to ansible files directory
             - checkout: AnsibleRepo
               displayName: Download ansible files

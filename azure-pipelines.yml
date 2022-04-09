@@ -1,7 +1,6 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+variables:
+- name: app_default_directory
+  value: sella_week7 
 
 trigger:
 - master
@@ -53,4 +52,15 @@ stages:
         runOnce:
           deploy:
             steps:
-            - script: echo my first deployment
+#            - script: echo my first deployment
+
+# unzip the files
+              - task: ExtractFiles@1
+                inputs:
+                  archiveFilePatterns: '**/*.zip'
+                  destinationFolder: '$(app_default_directory)'
+                  cleanDestinationFolder: true
+                  overwriteExistingFiles: false
+# Download the ansible from repo
+# create the hosts file from variables
+# Run the Ansible playbook

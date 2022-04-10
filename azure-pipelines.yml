@@ -122,6 +122,7 @@ stages:
               inputs:
                 ansibleInterface: 'agentMachine'
                 playbookPathOnAgentMachine: '/home/azureuser/sela_week7/ansible/install_site.yml'
+                failOnStdErr: false ##[error]Command failed with errors on Ansible machine, though nothing failed. Shell script instead??
                 #Not sure why relative path won't work and only from the pipeline working dir. Agent not allowed to work from there?
                 inventoriesAgentMachine: 'noInventory'
                 args: '--extra-vars "build_id=$(Build.BuildId) init_host_ip=$(init_host_ip)"'

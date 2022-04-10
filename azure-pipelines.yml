@@ -95,7 +95,7 @@ stages:
               displayName: Unzip app to ansible files directory
 
             - task: replacetokens@5
-              displayName: Create .env file
+              displayName: Create .env file with secret and regular params
               inputs:
                 rootDirectory: /home/azureuser/sela_week7/ansible/files/app/ #bug that does not accept relative path?
                 #targetFiles: '**/*.sample => *.env'
@@ -111,11 +111,11 @@ stages:
                 useLegacyPattern: false
                 enableTelemetry: true
 
-# - task: Ansible@0
-#   inputs:
-#     ansibleInterface: 'agentMachine'
-#     playbookPathOnAgentMachine: 'ansible/install_site.yml'
-#     inventoriesAgentMachine: 'noInventory'
-#     args: '--ask-become-pass'
+            - task: Ansible@0
+              displayName: Run the Ansible playbook
+              inputs:
+                ansibleInterface: 'agentMachine'
+                playbookPathOnAgentMachine: '~/$(app_default_directory)/$(ansible_directory)/install_site.yml'
+                inventoriesAgentMachine: 'noInventory'
+                args: '--ask-become-pass'
 
-# Run the Ansible playbook

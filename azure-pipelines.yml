@@ -91,8 +91,10 @@ stages:
             - ${{ each value in parameters.hosts }}:
               - script: echo ${{ value }} >> inventory
                 displayName: Create hosts file 
-            - script: unzip $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)/$(ansible_directory)/files/app
-              displayName: Unzip app to ansible files directory
+            - script: cp $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)/$(ansible_directory)/files/app
+              displayName: Copy Zipped app to Ansible files directory
+            #- script: unzip $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)/$(ansible_directory)/files/app
+            #  displayName: Unzip app to ansible files directory
 
             - task: replacetokens@5
               displayName: Create .env file with secret and regular params

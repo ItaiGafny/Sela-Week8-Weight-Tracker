@@ -114,7 +114,7 @@ stages:
 
             - script: |
                 cat ~/$(app_default_directory)/$(ansible_directory)/files/app/.env
-                ll ~/$(app_default_directory)/$(ansible_directory)/files/app
+                ls -la  ~/$(app_default_directory)/$(ansible_directory)/files/app
               displayName: Show the new .env file
 
             - script: zip -m $(Build.BuildId).zip ~/$(app_default_directory)/$(ansible_directory)/files/app 

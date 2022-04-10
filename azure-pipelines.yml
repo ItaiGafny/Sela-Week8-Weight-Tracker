@@ -119,5 +119,5 @@ stages:
                 playbookPathOnAgentMachine: '/home/azureuser/sela_week7/ansible/install_site.yml'
                 #Not sure why relative path won't work and only from the pipeline working dir. Agent not allowed to work from there?
                 inventoriesAgentMachine: 'noInventory'
-                #args: '--extra-vars "build_id=$(Build.BuildId) init_host_ip=parameters.hosts[0]"'
+                args: '--extra-vars "build_id=$(Build.BuildId) init_host_ip=parameters.hosts[0]"'
 

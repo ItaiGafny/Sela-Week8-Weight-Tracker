@@ -93,7 +93,7 @@ stages:
             - task: replacetokens@5
               displayName: Create .env file
               inputs:
-                rootDirectory: '~/$(app_default_directory)/$(ansible_directory)/files/app'
+                rootDirectory: ~/$(app_default_directory)/$(ansible_directory)/files/app
                 targetFiles: '**/.env.sample => .sample'
                 encoding: 'auto'
                 tokenPattern: 'default'

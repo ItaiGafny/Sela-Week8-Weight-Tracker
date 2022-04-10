@@ -113,6 +113,7 @@ stages:
 
             - script: |
                 cd  ~/$(app_default_directory)/$(ansible_directory)
+              displayName: Change working directory to app dir
             - task: Ansible@0
               displayName: Run the Ansible playbook
               inputs:

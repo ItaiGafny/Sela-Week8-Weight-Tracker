@@ -83,7 +83,7 @@ stages:
             - task: replacetokens@5
               displayName: Create .env file
               inputs:
-                rootDirectory: files/app
+                rootDirectory: files
                 targetFiles: '**/.env.sample => .sample'
                 encoding: 'auto'
                 tokenPattern: 'default'

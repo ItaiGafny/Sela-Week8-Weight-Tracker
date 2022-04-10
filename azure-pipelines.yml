@@ -89,7 +89,7 @@ stages:
               displayName: Copy ansible files
             - script: |
                 cd  ~/$(app_default_directory)/$(ansible_directory)
-                echo [webservers] >> inventory
+                echo [webservers1] >> inventory
             - ${{ each value in parameters.hosts }}:
               - script: echo ${{ value }} >> inventory
                 displayName: Create hosts file 

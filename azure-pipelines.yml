@@ -91,8 +91,6 @@ stages:
             - ${{ each value in parameters.hosts }}:
               - script: echo ${{ value }} >> inventory
                 displayName: Create hosts file 
-            #- script: cp $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)/$(ansible_directory)/files/app
-            #  displayName: Copy Zipped app to Ansible files directory
             - script: unzip $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)/$(ansible_directory)/files/app
               displayName: Unzip app to ansible files directory
 
@@ -111,6 +109,11 @@ stages:
                 enableRecursion: false
                 useLegacyPattern: false
                 enableTelemetry: true
+
+            - script: zip -m $(Build.BuildId).zip ~/$(app_default_directory)/$(ansible_directory)/files/app 
+              displayName: Zip back to save time the app to ansible files directory
+            - script: cp $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)/$(ansible_directory)/files/app
+              displayName: Copy Zipped app to Ansible files directory
 
             - task: Ansible@0
               displayName: Run the Ansible playbook

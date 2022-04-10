@@ -61,6 +61,10 @@ stages:
       displayName: Deploy
     - deployment: VMDeploy
       displayName: web
+      variables:
+      - name: LB_IP
+        value: 20.119.109.101
+
       environment:
         name:  'Staging'
         resourceType: VirtualMachine
@@ -86,8 +90,21 @@ stages:
                 displayName: Create hosts file 
             - script: unzip $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)/$(ansible_directory)/files/app
               displayName: Unzip app to ansible files directory
-              # - script: echo ${{ value }} >> inventory
-              #   displayName: Create .env file based on params 
+            - task: replacetokens@5
+              displayName: Create .env file
+              inputs:
+                rootDirectory: '~/$(app_default_directory)/$(ansible_directory)/files/app'
+                targetFiles: '**/.env.sample => .sample'
+                encoding: 'auto'
+                tokenPattern: 'default'
+                writeBOM: true
+                actionOnMissing: 'warn'
+                keepToken: false
+                actionOnNoFiles: 'continue'
+                enableTransforms: false
+                enableRecursion: false
+                useLegacyPattern: false
+                enableTelemetry: true
 
 # - task: Ansible@0
 #   inputs:

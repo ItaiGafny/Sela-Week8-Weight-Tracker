@@ -84,7 +84,7 @@ stages:
               displayName: Create .env file
               inputs:
                 rootDirectory: files
-                targetFiles: '**/.env.sample => .sample'
+                targetFiles: '**/*.sample => *.env'
                 encoding: 'auto'
                 tokenPattern: 'default'
                 writeBOM: true

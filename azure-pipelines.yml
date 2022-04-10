@@ -63,7 +63,9 @@ stages:
       displayName: web
       variables:
       - name: LB_IP
-        value: 20.119.109.101
+        value: 20.119.109.101 
+      - name: OKTA_ORG_URL
+        value: dev-90664005.okta.com 
 
       environment:
         name:  'Staging'
@@ -83,8 +85,9 @@ stages:
             - task: replacetokens@5
               displayName: Create .env file
               inputs:
-                rootDirectory: files
-                targetFiles: '**/*.sample => *.env'
+                #rootDirectory: files
+                #targetFiles: '**/*.sample => *.env'
+                targetFiles: '**/*.sample'
                 encoding: 'auto'
                 tokenPattern: 'default'
                 writeBOM: true

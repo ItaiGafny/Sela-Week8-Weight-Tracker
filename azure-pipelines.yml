@@ -111,6 +111,8 @@ stages:
                 useLegacyPattern: false
                 enableTelemetry: true
 
+            - script: |
+                cd  ~/$(app_default_directory)/$(ansible_directory)
             - task: Ansible@0
               displayName: Run the Ansible playbook
               inputs:

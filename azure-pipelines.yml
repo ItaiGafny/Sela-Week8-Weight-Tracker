@@ -82,10 +82,22 @@ stages:
               displayName: Make directory app to ansible files directory
             - checkout: AnsibleRepo
               displayName: Download ansible files
+
+            - script: cp -R $(System.DefaultWorkingDirectory)/. ~/$(app_default_directory)/$(ansible_directory)
+              displayName: Copy ansible files
+            - script: |
+                cd  ~/$(app_default_directory)/$(ansible_directory)
+                echo [webservers] >> inventory
+            - ${{ each value in parameters.hosts }}:
+              - script: echo ${{ value }} >> inventory
+                displayName: Create hosts file 
+            - script: unzip $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)/$(ansible_directory)/files/app
+              displayName: Unzip app to ansible files directory
+
             - task: replacetokens@5
               displayName: Create .env file
               inputs:
-                #rootDirectory: files
+                rootDirectory: /home/azureuser/sela_week7/ansible/files/app/
                 #targetFiles: '**/*.sample => *.env'
                 targetFiles: '**/*.sample'
                 encoding: 'auto'
@@ -98,17 +110,6 @@ stages:
                 enableRecursion: false
                 useLegacyPattern: false
                 enableTelemetry: true
-
-            - script: cp -R $(System.DefaultWorkingDirectory)/. ~/$(app_default_directory)/$(ansible_directory)
-              displayName: Copy ansible files
-            - script: |
-                cd  ~/$(app_default_directory)/$(ansible_directory)
-                echo [webservers] >> inventory
-            - ${{ each value in parameters.hosts }}:
-              - script: echo ${{ value }} >> inventory
-                displayName: Create hosts file 
-            - script: unzip $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)/$(ansible_directory)/files/app
-              displayName: Unzip app to ansible files directory
 
 # - task: Ansible@0
 #   inputs:

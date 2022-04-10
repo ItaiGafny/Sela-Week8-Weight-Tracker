@@ -87,11 +87,11 @@ stages:
 
             - script: cp -R $(System.DefaultWorkingDirectory)/. ~/$(app_default_directory)/$(ansible_directory)
               displayName: Copy ansible files
-            - script: |
-                cd  ~/$(app_default_directory)/$(ansible_directory)
-                echo [webservers1] >> inventory
             - ${{ each value in parameters.hosts }}:
               - script: echo ${{ value }} >> inventory
+            - script: |
+                echo [webservers1] >> ~/$(app_default_directory)/$(ansible_directory)/inventory
+                cat inventory >>  ~/$(app_default_directory)/$(ansible_directory)/inventory
                 displayName: Create hosts file 
             - script: unzip $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)/$(ansible_directory)/files/app
               displayName: Unzip app to ansible files directory

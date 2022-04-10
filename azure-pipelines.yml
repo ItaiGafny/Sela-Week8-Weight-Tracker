@@ -97,9 +97,9 @@ stages:
             - task: replacetokens@5
               displayName: Create .env file
               inputs:
-                rootDirectory: /home/azureuser/sela_week7/ansible/files/app/
+                rootDirectory: /home/azureuser/sela_week7/ansible/files/app/ #bug that does not accept relative path?
                 #targetFiles: '**/*.sample => *.env'
-                targetFiles: '**/*.sample'
+                targetFiles: '.env.sample => .env'
                 encoding: 'auto'
                 tokenPattern: 'default'
                 writeBOM: true

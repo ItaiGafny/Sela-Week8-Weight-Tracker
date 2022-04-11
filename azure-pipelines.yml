@@ -1,3 +1,4 @@
+#General variables for all envirnments
 variables:
 - name: app_default_directory
   value: sela_week7 

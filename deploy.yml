@@ -10,7 +10,6 @@ steps:
   displayName: Copy ansible files
 - ${{ each value in parameters.hosts }}:
   - script: echo ${{ value }} >> inventory
-  displayName: host item
   
 - script: |
     echo [webservers1] >> ~/$(app_default_directory)/$(ansible_directory)/inventory

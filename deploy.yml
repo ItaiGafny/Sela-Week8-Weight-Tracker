@@ -1,3 +1,11 @@
+parameters:
+- name: hosts
+  type: object
+  default:
+  - 10.0.0.4
+  - 10.0.0.5
+  - 10.0.0.7
+
 steps:
 - script: rm -rf ~/$(app_default_directory)
   displayName: Remove app
@@ -8,6 +16,7 @@ steps:
 
 - script: cp -R $(System.DefaultWorkingDirectory)/. ~/$(app_default_directory)/$(ansible_directory)
   displayName: Copy ansible files
+
 - ${{ each value in parameters.hosts }}:
   - script: echo ${{ value }} >> inventory
   
@@ -15,6 +24,7 @@ steps:
     echo [webservers1] >> ~/$(app_default_directory)/$(ansible_directory)/inventory
     cat inventory >>  ~/$(app_default_directory)/$(ansible_directory)/inventory
   displayName: Create hosts file 
+
 - script: unzip -o $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)/$(ansible_directory)/files/app
   displayName: Unzip app to ansible files directory
 
@@ -39,13 +49,10 @@ steps:
     ls -la  ~/$(app_default_directory)/$(ansible_directory)/files/app
   displayName: Show the new .env file
 
-#- script: zip -m ~/$(app_default_directory)/$(ansible_directory)/files/app/$(Build.BuildId).zip ~/$(app_default_directory)/$(ansible_directory)/files/app 
 - script: |
     cd ~/$(app_default_directory)/$(ansible_directory)/files/app/
     zip -r $(Build.BuildId).zip . 
   displayName: Zip back to save time the app to ansible files directory
-#- script: cp $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)/$(ansible_directory)/files/app
-#  displayName: Copy Zipped app to Ansible files directory
 
 - script: |
     cd ~/$(app_default_directory)/$(ansible_directory)

@@ -123,7 +123,7 @@ stages:
             #- script: zip -m ~/$(app_default_directory)/$(ansible_directory)/files/app/$(Build.BuildId).zip ~/$(app_default_directory)/$(ansible_directory)/files/app 
             - script: |
                 cd ~/$(app_default_directory)/$(ansible_directory)/files/app/
-                zip -r $(Build.BuildId).zip ~/$(app_default_directory)/$(ansible_directory)/files/app 
+                zip -r $(Build.BuildId).zip . 
               displayName: Zip back to save time the app to ansible files directory
             #- script: cp $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)/$(ansible_directory)/files/app
             #  displayName: Copy Zipped app to Ansible files directory

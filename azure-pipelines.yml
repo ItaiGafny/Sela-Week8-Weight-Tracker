@@ -5,8 +5,11 @@ variables:
   value: ansible 
 - name: init_host_ip
   value: 10.0.0.4
+- name: OKTA_ORG_URL
+  value: dev-90664005.okta.com 
 - name: init_db
   value: no
+
 parameters:
 - name: hosts
   type: object
@@ -48,10 +51,7 @@ stages:
     - deployment: VMDeploy
       displayName: web
       variables:
-      - name: LB_IP
-        value: 20.119.109.101 
-      - name: OKTA_ORG_URL
-        value: dev-90664005.okta.com 
+      - group: Staging
 
       environment:
         name:  'Staging'
@@ -72,10 +72,7 @@ stages:
     - deployment: VMDeploy
       displayName: web
       variables:
-      - name: LB_IP
-        value: 20.221.96.242 
-      - name: OKTA_ORG_URL
-        value: dev-90664005.okta.com 
+      - group: Production
 
       environment:
         name:  'Production' #ApprovalRequired

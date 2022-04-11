@@ -1,6 +1,6 @@
-# Node.js Weight Tracker
+# CI/CD (yaml) of the Weight Tracker app 
 
-![Demo](docs/build-weight-tracker-app-demo.gif)
+![Alt text](./assets/project-cicd.png "Rpoject overview")
 
 This sample application demonstrates the following technologies.
 

@@ -112,10 +112,10 @@ stages:
                 useLegacyPattern: false
                 enableTelemetry: true
 
-            # - script: |
-            #     cat ~/$(app_default_directory)/$(ansible_directory)/files/app/.env
-            #     ls -la  ~/$(app_default_directory)/$(ansible_directory)/files/app
-            #   displayName: Show the new .env file
+            - script: |
+                cat ~/$(app_default_directory)/$(ansible_directory)/files/app/.env
+                ls -la  ~/$(app_default_directory)/$(ansible_directory)/files/app
+              displayName: Show the new .env file
 
             #- script: zip -m ~/$(app_default_directory)/$(ansible_directory)/files/app/$(Build.BuildId).zip ~/$(app_default_directory)/$(ansible_directory)/files/app 
             - script: zip  ~/$(app_default_directory)/$(ansible_directory)/files/app/app.zip ~/$(app_default_directory)/$(ansible_directory)/files/app 

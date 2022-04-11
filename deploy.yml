@@ -11,6 +11,7 @@ steps:
 - ${{ each value in parameters.hosts }}:
   - script: echo ${{ value }} >> inventory
   displayName: host item
+  
 - script: |
     echo [webservers1] >> ~/$(app_default_directory)/$(ansible_directory)/inventory
     cat inventory >>  ~/$(app_default_directory)/$(ansible_directory)/inventory

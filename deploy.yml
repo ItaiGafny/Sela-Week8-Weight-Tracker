@@ -25,7 +25,7 @@ steps:
     cat inventory >>  ~/$(app_default_directory)/$(ansible_directory)/inventory
   displayName: Create hosts file 
 
-    #create the .env file
+#create the .env file
 - task: file-creator@6
   inputs:
     filepath: '/home/azureuser/$(app_default_directory)/$(ansible_directory)/files/app/.env'
@@ -57,12 +57,6 @@ steps:
 - task: Docker@1
   displayName: Pull the image from container registry
   inputs:
-    command: pull
-    repository: $(imageRepository)
-    containerRegistry: $(dockerRegistryServiceConnection)
-    tags: |
-      $(Build.BuildId)
-      
     azureSubscriptionEndpoint: 'ACRconnection'
     azureContainerRegistry: $(imageRepository).azurecr.io
     command: pull

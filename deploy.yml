@@ -28,7 +28,7 @@ steps:
     #create the .env file
 - task: file-creator@6
   inputs:
-    filepath: '/home/azureuser/$(app_default_directory)/$(ansible_directory)/files/app'
+    filepath: '/home/azureuser/$(app_default_directory)/$(ansible_directory)/files/app/.env'
     filecontent: |
       HOST=0.0.0.0
       PORT=8080

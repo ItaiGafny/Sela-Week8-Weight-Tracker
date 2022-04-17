@@ -54,7 +54,7 @@ steps:
     ls -la  ~/$(app_default_directory)/$(ansible_directory)/files/app
   displayName: Show the new .env file
 
-- task: Docker@2
+- task: Docker@1
   displayName: Pull the image from container registry
   inputs:
     command: pull
@@ -62,6 +62,11 @@ steps:
     containerRegistry: $(dockerRegistryServiceConnection)
     tags: |
       $(Build.BuildId)
+      
+    azureSubscriptionEndpoint: 'ACRconnection'
+    azureContainerRegistry: $(imageRepository).azurecr.io
+    command: pull
+    arguments: '$(imageRepository).azurecr.io/$(imageRepository):$(Build.BuildId)'
 
 # - script: |
 #     cd ~/$(app_default_directory)/$(ansible_directory)

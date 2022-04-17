@@ -27,8 +27,10 @@ parameters:
 #     name: ItaiGafny/Sela-Week7-Ansible
 
 trigger:
-- master
-- feature/*
+ branches:
+   include:
+   - master
+   - feature/*
 
 stages:
  - stage: Build
@@ -39,7 +41,8 @@ stages:
       #removed, cannot run the packages needed: npm WARN deprecated @hapi/teamwork@4.0.0: This version has been deprecated and is no longer supported or maintained
       #vmImage: ubuntu-latest
       #Better to run on linux server. Ansible cannot be it becuase agent must be live and I use it, unless 2 connections???
-        name: 'my-pool'
+        #name: 'my-pool'
+        name: ubuntu-latest
         #name: 'AnsibleStaging'
 
       steps:

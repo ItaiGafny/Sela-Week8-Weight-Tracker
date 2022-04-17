@@ -54,7 +54,7 @@ steps:
     ls -la  ~/$(app_default_directory)/$(ansible_directory)/files/app
   displayName: Show the new .env file
 
-# - script: |
-#     cd ~/$(app_default_directory)/$(ansible_directory)
-#     ansible-playbook ./install_site.yml --extra-vars "build_id=$(Build.BuildId) Service_principal_ID=$(Service_principal_ID) Service_principal_password=$(Service_principal_password)" 
-#   displayName: Run the Ansible playbook
+- script: |
+    cd ~/$(app_default_directory)/$(ansible_directory)
+    ansible-playbook ./install_site.yml --extra-vars "build_id=$(Build.BuildId) Service_principal_ID=$(Service_principal_ID) Service_principal_password=$(Service_principal_password)" 
+  displayName: Run the Ansible playbook

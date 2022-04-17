@@ -57,7 +57,7 @@ steps:
 - task: Docker@1
   displayName: Pull the image from container registry
   inputs:
-    azureSubscriptionEndpoint: 'ACRconnection'
+    azureSubscriptionEndpoint: 'Azure Pass - Sponsorship(c68ef7b9-0b08-4789-bd78-bd2a8147f063)'
     azureContainerRegistry: $(imageRepository).azurecr.io
     command: pull
     arguments: '$(imageRepository).azurecr.io/$(imageRepository):$(Build.BuildId)'

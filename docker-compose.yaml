@@ -1,0 +1,19 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:12-alpine
+    restart: always
+    ports: 
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD={your POSTGRES_PASSWORD}}
+      - POSTGRES_USER={your POSTGRES_USER}
+
+  weight-tracker:
+    image: weight-tracker:1.1
+    ports: 
+      - 8080:8080
+#    volumes:
+      
+      
+#volumes:

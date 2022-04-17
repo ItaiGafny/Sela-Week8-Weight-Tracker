@@ -6,8 +6,11 @@
 
       - script: |
           npm install @hapi/hapi@19 @hapi/bell@12 @hapi/boom@9 @hapi/cookie@11 @hapi/inert@6 @hapi/joi@17 @hapi/vision@6 dotenv@8 ejs@3 postgres@1
-#          npm --save-dev nodemon@2
         displayName: 'npm install and build'
+
+- script: |
+          npm --save-dev nodemon@2
+        displayName: 'npm install nodemon'
 
 #       - task: ArchiveFiles@2
 #         displayName: 'Archive files'

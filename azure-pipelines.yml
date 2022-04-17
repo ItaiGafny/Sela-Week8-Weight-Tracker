@@ -1,7 +1,7 @@
 #General variables for all envirnments
 variables:
 - name: app_default_directory
-  value: sela_week7 
+  value: sela_week8 
 - name: ansible_directory
   value: ansible 
 - name: init_host_ip
@@ -10,6 +10,11 @@ variables:
   value: dev-90664005.okta.com 
 - name: init_db
   value: no
+- name: imageRepository
+  value: weightTracker
+- name: dockerRegistryServiceConnection
+  value: ACRConnection
+
 
 parameters:
 - name: hosts
@@ -19,69 +24,70 @@ parameters:
   - 10.0.0.5
   - 10.0.0.7
 
-resources:
-  repositories:
-  - repository: AnsibleRepo # The name used to reference this repository in the checkout step
-    type: github
-    endpoint: ItaiGafny
-    name: ItaiGafny/Sela-Week7-Ansible
+# resources:
+#   repositories:
+#   - repository: AnsibleRepo # The name used to reference this repository in the checkout step
+#     type: github
+#     endpoint: ItaiGafny
+#     name: ItaiGafny/Sela-Week7-Ansible
 
 trigger:
-- master
+ branches:
+   include:
+   - master
+   - feature/*
 
 stages:
- - stage: Build
+ - stage: CI
    jobs:
-    - job: Build
-      displayName: Build
+    - job: BuildAndPushDocker
+      displayName: Build and push Docker
+      workspace: 
+        clean: all
       pool:
-      #removed, cannot run the packages needed: npm WARN deprecated @hapi/teamwork@4.0.0: This version has been deprecated and is no longer supported or maintained
-      #vmImage: ubuntu-latest
-      #Better to run on linux server. Ansible cannot be it becuase agent must be live and I use it, unless 2 connections???
-        name: 'my-pool'
-        #name: 'AnsibleStaging'
-
+        vmImage: ubuntu-latest
       steps:
       - template: build.yml
       
       
- - stage: Deploy_to_Staging
-   jobs:
-    - job: Deploy
-      displayName: Deploy
-    - deployment: VMDeploy
-      displayName: web
-      variables:
-      - group: Staging
+#  - stage: Deploy_to_Staging
+#    condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+#    jobs:
+#     - job: Deploy
+#       displayName: Deploy
+#     - deployment: VMDeploy
+#       displayName: web
+#       variables:
+#       - group: Staging
 
-      environment:
-        name:  'Staging'
-        resourceType: VirtualMachine
-        tags: 'staging'
-      strategy:
-      # default deployment strategy
-        runOnce:
-          deploy:
-            steps:
-            - template: deploy.yml
+#       environment:
+#         name:  'Staging'
+#         resourceType: VirtualMachine
+#         tags: 'staging'
+#       strategy:
+#       # default deployment strategy
+#         runOnce:
+#           deploy:
+#             steps:
+#             - template: deploy.yml
 
 
- - stage: Deploy_to_Production
-   jobs:
-    - job: Deploy
-      displayName: Deploy
-    - deployment: VMDeploy
-      displayName: web
-      variables:
-      - group: Production
+#  - stage: Deploy_to_Production
+#    jobs:
+#     - job: Deploy
+#       displayName: Deploy
+#     - deployment: VMDeploy
+#       displayName: web
+#       variables:
+#       - group: Production
 
-      environment:
-        name:  'Production' #ApprovalRequired
-        resourceType: VirtualMachine
-        tags: 'Production'
-      strategy:
-      # default deployment strategy
-        runOnce:
-          deploy:
-            steps:
-            - template: deploy.yml
+#       environment:
+#         name:  'Production' #ApprovalRequired
+#         resourceType: VirtualMachine
+#         tags: 'Production'
+#       strategy:
+#       # default deployment strategy
+#         runOnce:
+#           deploy:
+#             steps:
+#             - template: deploy.yml

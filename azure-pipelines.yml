@@ -10,6 +10,11 @@ variables:
   value: dev-90664005.okta.com 
 - name: init_db
   value: no
+- name: imageRepository
+  value: weightTracker
+- name: dockerRegistryServiceConnection
+  value: ACRConnection
+
 
 parameters:
 - name: hosts

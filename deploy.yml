@@ -54,6 +54,15 @@ steps:
     ls -la  ~/$(app_default_directory)/$(ansible_directory)/files/app
   displayName: Show the new .env file
 
+- task: Docker@2
+  displayName: Pull the image from container registry
+  inputs:
+    command: pull
+    repository: $(imageRepository)
+    containerRegistry: $(dockerRegistryServiceConnection)
+    tags: |
+      $(Build.BuildId)
+
 # - script: |
 #     cd ~/$(app_default_directory)/$(ansible_directory)
 #     ansible-playbook ./install_site.yml --extra-vars "build_id=$(Build.BuildId) init_host_ip=$(init_host_ip) init_db=$(init_db)" 

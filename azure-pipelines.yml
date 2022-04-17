@@ -1,7 +1,7 @@
 #General variables for all envirnments
 variables:
 - name: app_default_directory
-  value: sela_week7 
+  value: sela_week8 
 - name: ansible_directory
   value: ansible 
 - name: init_host_ip
@@ -19,15 +19,16 @@ parameters:
   - 10.0.0.5
   - 10.0.0.7
 
-resources:
-  repositories:
-  - repository: AnsibleRepo # The name used to reference this repository in the checkout step
-    type: github
-    endpoint: ItaiGafny
-    name: ItaiGafny/Sela-Week7-Ansible
+# resources:
+#   repositories:
+#   - repository: AnsibleRepo # The name used to reference this repository in the checkout step
+#     type: github
+#     endpoint: ItaiGafny
+#     name: ItaiGafny/Sela-Week7-Ansible
 
 trigger:
 - master
+- feature/*
 
 stages:
  - stage: Build
@@ -45,43 +46,43 @@ stages:
       - template: build.yml
       
       
- - stage: Deploy_to_Staging
-   jobs:
-    - job: Deploy
-      displayName: Deploy
-    - deployment: VMDeploy
-      displayName: web
-      variables:
-      - group: Staging
+#  - stage: Deploy_to_Staging
+#    jobs:
+#     - job: Deploy
+#       displayName: Deploy
+#     - deployment: VMDeploy
+#       displayName: web
+#       variables:
+#       - group: Staging
 
-      environment:
-        name:  'Staging'
-        resourceType: VirtualMachine
-        tags: 'staging'
-      strategy:
-      # default deployment strategy
-        runOnce:
-          deploy:
-            steps:
-            - template: deploy.yml
+#       environment:
+#         name:  'Staging'
+#         resourceType: VirtualMachine
+#         tags: 'staging'
+#       strategy:
+#       # default deployment strategy
+#         runOnce:
+#           deploy:
+#             steps:
+#             - template: deploy.yml
 
 
- - stage: Deploy_to_Production
-   jobs:
-    - job: Deploy
-      displayName: Deploy
-    - deployment: VMDeploy
-      displayName: web
-      variables:
-      - group: Production
+#  - stage: Deploy_to_Production
+#    jobs:
+#     - job: Deploy
+#       displayName: Deploy
+#     - deployment: VMDeploy
+#       displayName: web
+#       variables:
+#       - group: Production
 
-      environment:
-        name:  'Production' #ApprovalRequired
-        resourceType: VirtualMachine
-        tags: 'Production'
-      strategy:
-      # default deployment strategy
-        runOnce:
-          deploy:
-            steps:
-            - template: deploy.yml
+#       environment:
+#         name:  'Production' #ApprovalRequired
+#         resourceType: VirtualMachine
+#         tags: 'Production'
+#       strategy:
+#       # default deployment strategy
+#         runOnce:
+#           deploy:
+#             steps:
+#             - template: deploy.yml

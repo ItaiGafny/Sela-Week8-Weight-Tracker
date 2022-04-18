@@ -28,7 +28,7 @@ steps:
 #create the .env file
 - task: file-creator@6
   inputs:
-    filepath: '/home/azureuser/$(app_default_directory)/$(ansible_directory)/files/app/.env'
+    filepath: '/home/azureuser/$(app_default_directory)/$(ansible_directory)/files/.env'
     filecontent: |
       HOST=0.0.0.0
       PORT=8080
@@ -50,8 +50,8 @@ steps:
     fileoverwrite: true
 
 - script: |
-    cat ~/$(app_default_directory)/$(ansible_directory)/files/app/.env
-    ls -la  ~/$(app_default_directory)/$(ansible_directory)/files/app
+    cat ~/$(app_default_directory)/$(ansible_directory)/files/.env
+    ls -la  ~/$(app_default_directory)/$(ansible_directory)/files
   displayName: Show the new .env file
 
 - script: |

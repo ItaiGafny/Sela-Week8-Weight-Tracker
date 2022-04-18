@@ -56,5 +56,5 @@ steps:
 
 - script: |
     cd ~/$(app_default_directory)/$(ansible_directory)
-    ansible-playbook ./install_site.yml --extra-vars "build_id=$(Build.BuildId) Service_principal_ID=$(Service_principal_ID) Service_principal_password=$(Service_principal_password)" 
+    ansible-playbook ./install_site.yml --extra-vars "build_id=$(Build.BuildId) Service_principal_ID=$(Service_principal_ID) Service_principal_password=$(Service_principal_password) init_host_ip=$(init_host_ip) init_db=$(init_db)" 
   displayName: Run the Ansible playbook

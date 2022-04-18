@@ -4,7 +4,7 @@ parameters:
   default:
   - 10.0.0.4
   - 10.0.0.5
-  - 10.0.0.7
+  - 10.0.0.6
 
 steps:
 - script: rm -rf ~/$(app_default_directory)
@@ -25,36 +25,36 @@ steps:
     cat inventory >>  ~/$(app_default_directory)/$(ansible_directory)/inventory
   displayName: Create hosts file 
 
-- script: unzip -o $(System.ArtifactsDirectory)/../drop/$(Build.BuildId).zip -d ~/$(app_default_directory)/$(ansible_directory)/files/app
-  displayName: Unzip app to ansible files directory
-
-- task: replacetokens@5
-  displayName: Create .env file with secret and regular params
+#create the .env file
+- task: file-creator@6
   inputs:
-    rootDirectory: /home/azureuser/sela_week7/ansible/files/app/ #bug that does not accept relative path?
-    targetFiles: '.env.sample => .env'
-    encoding: 'auto'
-    tokenPattern: 'default'
-    writeBOM: true
-    actionOnMissing: 'warn'
-    keepToken: false
-    actionOnNoFiles: 'continue'
-    enableTransforms: false
-    enableRecursion: false
-    useLegacyPattern: false
-    enableTelemetry: true
+    filepath: '/home/azureuser/$(app_default_directory)/$(ansible_directory)/files/.env'
+    filecontent: |
+      HOST=0.0.0.0
+      PORT=8080
+      NODE_ENV=development
+      HOST_URL=http://$(LB_IP):8080
+      COOKIE_ENCRYPT_PWD=superAwesomePasswordStringThatIsAtLeast32CharactersLong!
+
+      # Okta configuration
+      OKTA_ORG_URL=https://$(OKTA_ORG_URL)
+      OKTA_CLIENT_ID=$(OKTA_CLIENT_ID)
+      OKTA_CLIENT_SECRET=$(OKTA_CLIENT_SECRET)
+
+      # Postgres configuration
+      PGHOST=$(PGHOST)
+      PGUSERNAME=$(PGUSERNAME)
+      PGDATABASE=postgres
+      PGPASSWORD=$(PGPASSWORD)
+      PGPORT=5432
+    fileoverwrite: true
 
 - script: |
-    cat ~/$(app_default_directory)/$(ansible_directory)/files/app/.env
-    ls -la  ~/$(app_default_directory)/$(ansible_directory)/files/app
+    cat ~/$(app_default_directory)/$(ansible_directory)/files/.env
+    ls -la  ~/$(app_default_directory)/$(ansible_directory)/files
   displayName: Show the new .env file
 
 - script: |
-    cd ~/$(app_default_directory)/$(ansible_directory)/files/app/
-    zip -r $(Build.BuildId).zip . 
-  displayName: Zip back to save time the app to ansible files directory
-
-- script: |
     cd ~/$(app_default_directory)/$(ansible_directory)
-    ansible-playbook ./install_site.yml --extra-vars "build_id=$(Build.BuildId) init_host_ip=$(init_host_ip) init_db=$(init_db)" 
+    ansible-playbook ./install_site.yml --extra-vars "build_id=$(Build.BuildId) Service_principal_ID=$(Service_principal_ID) Service_principal_password=$(Service_principal_password) init_host_ip=$(init_host_ip) init_db=$(init_db)" 
   displayName: Run the Ansible playbook

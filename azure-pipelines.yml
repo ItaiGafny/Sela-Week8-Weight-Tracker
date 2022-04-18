@@ -72,23 +72,23 @@ stages:
             - template: deploy.yml
 
 
-#  - stage: Deploy_to_Production
-#    condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
-#    jobs:
-#     - job: Deploy
-#       displayName: Deploy
-#     - deployment: VMDeploy
-#       displayName: web
-#       variables:
-#       - group: Production
+ - stage: Deploy_to_Production
+   condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+   jobs:
+    - job: Deploy
+      displayName: Deploy
+    - deployment: VMDeploy
+      displayName: web
+      variables:
+      - group: Production
 
-#       environment:
-#         name:  'Production' #ApprovalRequired
-#         resourceType: VirtualMachine
-#         tags: 'Production'
-#       strategy:
-#       # default deployment strategy
-#         runOnce:
-#           deploy:
-#             steps:
-#             - template: deploy.yml
+      environment:
+        name:  'Production' #ApprovalRequired
+        resourceType: VirtualMachine
+        tags: 'Production'
+      strategy:
+      # default deployment strategy
+        runOnce:
+          deploy:
+            steps:
+            - template: deploy.yml

@@ -17,7 +17,9 @@ This env is running with Docker containers. The Docker is created with the Docke
 4. Create an Agent pool in the project settings. In this yaml file, it is referenced as 'my-pool'.
 5. After building the app, Docker image is pushed to ACR (Azure Container Registry) - on master branch only. For feature branch, image is not pushed.
 6. On each commit to the Repository, the CI will automatically run and the CD is pending your approval.
-7. You can view the Ansible setup [here](https://github.com/ItaiGafny/Sela-Week7-Ansible).
+7. To pull the image from ACR, Create the service principal to enable connection to ACR:
+https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-service-principal#create-a-service-principal
+8. You can view the Ansible setup [here](https://github.com/ItaiGafny/Sela-Week7-Ansible).
 
 **Requirements:**
 * [Azure DevOps account](https://dev.azure.com/)
